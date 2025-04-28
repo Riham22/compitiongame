@@ -3,6 +3,7 @@
 import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { getPlayers, saveScores } from "../services/gameService";
+import PlayerSetup from './playerSetup';
 
 
 const questions = [
@@ -116,11 +117,10 @@ export default function GameBoard() {
   const renderCards = () => {
     return cards.map((card, idx) => (
     <div key={idx} 
-    className={`font-semibold w-full h-full p-4 my-2 mx-1 rounded-md border-[1px] 
+    className={`cursor-pointer font-semibold w-full h-full p-4 my-2 mx-1 rounded-md border-[1px] 
       bg-slate-500 border-slate-50 card text-center
       ${card.answered ? 'opacity-50' : ''}`}
-    // className="font-semibold w-full h-full p-4 my-2 mx-1 rounded-md border-[1px] bg-slate-500 border-slate-50 card text-center"
- onClick={() => openCard(idx)}>
+       onClick={() => openCard(idx)}>
         {activeCard === idx && (
   <div className="timer text-base font-normal">الوقت المتبقي: {timer}</div>
 )}
@@ -178,23 +178,35 @@ export default function GameBoard() {
     ) : (
       <h3>الفائز: {score.player1 > score.player2 ? players.player1 : players.player2}</h3>
     )}
-    <button onClick={resetGame} className="reset-btn">ابدأ </button>
+    {/* <button onClick={PlayerSetup} className="reset-btn">ابدأ من جديد </button> */}
   </div>
 ) : (
+  <>
   <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 justify-items-center p-4">
     {renderCards()}
   </div>
+   <div className="mx-auto">
+   <button onClick={resetGame} className="reset-btn  bg-slate-50 p-3 w-1/3 rounded-md border-[1px] border-slate-800 my-3 mx-2 text-base font-normal text-slate-800 hover:bg-slate-200">إعادة الاختبار</button>
+   <button 
+onClick={resetPlayers} 
+className="reset-btn bg-slate-50 p-3 w-1/3 rounded-md border-[1px] border-slate-800 my-3 mx-2 text-base font-normal text-slate-800 hover:bg-slate-200"
+>
+اختيار متنافسين جدد
+</button>
+
+
+   </div>
+  </>
+  
+   
 )}
       </div>
-      <div className="mx-auto">
-      <button onClick={resetGame} className="reset-btn  bg-slate-50 p-3 w-1/3 rounded-md border-[1px] border-slate-800 my-3 mx-2 text-base font-normal text-slate-800 hover:bg-slate-200">إعادة الاختبار</button>
       <button 
-  onClick={resetPlayers} 
-  className="reset-btn bg-slate-50 p-3 w-1/3 rounded-md border-[1px] border-slate-800 my-3 mx-2 text-base font-normal text-slate-800 hover:bg-slate-200"
+onClick={resetPlayers} 
+className="reset-btn bg-slate-50 p-3 w-1/3 rounded-md border-[1px] border-slate-800 my-3 mx-2 text-base font-normal text-slate-800 hover:bg-slate-200"
 >
-  اختيار متنافسين جدد
+اختيار متنافسين جدد
 </button>
-      </div>
       
 </div>
   );
